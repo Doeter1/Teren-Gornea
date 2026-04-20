@@ -1,1 +1,629 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teren de Vânzare – Clisura Dunării | Land for Sale – Danube Gorge</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --earth:#2C1A0E;
+  --forest:#1C3022;
+  --water:#1A3D5C;
+  --danube:#4A7FA5;
+  --gold:#D4A843;
+  --sand:#E8D5A3;
+  --cream:#FAF6EE;
+  --mist:#B8C4BB;
+  --white:#FFFFFF;
+  --text:#1A1208;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
 
+/* LANG TOGGLE */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:flex-end;padding:12px 24px;background:rgba(28,48,34,0.95);backdrop-filter:blur(8px)}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(212,168,67,0.5);background:none;color:var(--sand);padding:6px 16px;cursor:pointer;transition:all 0.25s ease;margin-left:8px}
+.lang-btn.active{background:var(--gold);color:var(--earth);border-color:var(--gold)}
+.lang-btn:hover{border-color:var(--gold);color:var(--gold)}
+.lang-btn.active:hover{color:var(--earth)}
+
+/* HERO */
+.hero{min-height:100vh;position:relative;display:grid;grid-template-rows:1fr auto;padding-top:44px;overflow:hidden}
+.hero-photos{position:absolute;inset:0;display:grid;grid-template-columns:1.8fr 1fr;grid-template-rows:1fr 1fr}
+.hero-photo{overflow:hidden}
+.hero-photo img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease}
+.hero-photo:hover img{transform:scale(1.04)}
+.hero-photo.main{grid-row:1/3;position:relative}
+.hero-photo.main img{height:100%}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(28,48,34,0.72) 0%,rgba(26,61,92,0.45) 50%,rgba(28,48,34,0.6) 100%)}
+.photo-divider{position:absolute;inset:0;pointer-events:none;z-index:2}
+.hero-content{position:relative;z-index:10;padding:60px 64px;display:flex;flex-direction:column;justify-content:flex-end;min-height:100vh}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,78px);font-weight:400;line-height:1.05;color:var(--white);margin-bottom:8px}
+.hero-title em{font-style:italic;color:var(--sand)}
+.hero-subtitle{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--mist);margin-bottom:40px}
+.hero-price-box{display:inline-flex;flex-direction:column;border-left:3px solid var(--gold);padding-left:20px;margin-bottom:48px}
+.hero-price{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);color:var(--gold);font-weight:700}
+.hero-price-note{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mist);margin-top:4px}
+.hero-scroll{display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+.hero-scroll::after{content:'';width:48px;height:1px;background:rgba(255,255,255,0.3)}
+
+/* STATS BAR */
+.stats-bar{background:var(--forest);padding:0}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);max-width:1100px;margin:0 auto}
+.stat-item{padding:28px 32px;border-right:1px solid rgba(255,255,255,0.08);text-align:center}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Playfair Display',serif;font-size:32px;color:var(--gold);display:block;line-height:1}
+.stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mist);margin-top:6px;display:block}
+
+/* BILINGUAL SECTIONS */
+.ro-content,.en-content{display:none}
+.ro-content.show,.en-content.show{display:block}
+
+/* SECTION */
+.section{padding:80px 0}
+.container{max-width:1100px;margin:0 auto;padding:0 48px}
+.section-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--danube);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-tag::before{content:'';width:24px;height:1px;background:var(--danube)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,46px);font-weight:400;line-height:1.15;color:var(--forest);margin-bottom:28px}
+.section-title em{font-style:italic;color:var(--danube)}
+.body-text{font-size:15px;font-weight:300;line-height:1.9;color:#3D3020;max-width:680px}
+
+/* PHOTO GALLERY */
+.gallery{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:320px 220px;gap:4px;margin-top:52px}
+.gallery-item{overflow:hidden;position:relative}
+.gallery-item.tall{grid-row:1/3}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(to top,rgba(28,48,34,0.85),transparent);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.85)}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;background:rgba(28,48,34,0.06)}
+.feature-card{background:var(--cream);padding:36px 28px;transition:background 0.3s ease;border:1px solid rgba(28,48,34,0.06)}
+.feature-card:hover{background:var(--white)}
+.feat-icon{font-size:24px;margin-bottom:16px;display:block}
+.feat-name{font-family:'Playfair Display',serif;font-size:16px;color:var(--forest);margin-bottom:8px}
+.feat-desc{font-size:13px;color:#5A4A30;line-height:1.7;font-weight:300}
+
+/* SPLIT SECTION */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:0}
+.split-text{background:var(--forest);padding:72px 56px;color:var(--cream)}
+.split-text .section-title{color:var(--white)}
+.split-text .section-title em{color:var(--sand)}
+.split-text .body-text{color:var(--mist);max-width:100%}
+.split-map{position:relative;background:var(--water);min-height:480px;overflow:hidden}
+.map-iframe{width:100%;height:100%;border:none;filter:saturate(0.8) contrast(1.1)}
+.map-pin-label{position:absolute;bottom:20px;left:20px;background:rgba(28,48,34,0.92);color:var(--sand);padding:10px 16px;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+
+/* INVEST LIST */
+.invest-items{margin-top:28px;display:flex;flex-direction:column;gap:14px}
+.invest-item{display:flex;align-items:flex-start;gap:14px;font-size:14px;color:var(--mist);font-weight:300;line-height:1.6}
+.invest-item::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:1px}
+
+/* DISTANCES */
+.section-alt{background:var(--forest);color:var(--cream)}
+.distances-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:40px}
+.dist-card{background:rgba(255,255,255,0.04);padding:28px 32px;border:1px solid rgba(255,255,255,0.06);transition:background 0.25s}
+.dist-card:hover{background:rgba(255,255,255,0.08)}
+.dist-place{font-family:'Playfair Display',serif;font-size:18px;color:var(--white);margin-bottom:6px}
+.dist-km{font-size:22px;font-weight:600;color:var(--gold)}
+.dist-detail{font-size:12px;color:var(--mist);letter-spacing:1px;margin-top:4px}
+
+/* FESTIVALS */
+.festivals{background:var(--cream)}
+.fest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px}
+.fest-card{border:1px solid rgba(28,48,34,0.12);padding:32px 24px;transition:all 0.3s ease;position:relative;overflow:hidden}
+.fest-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s ease}
+.fest-card:hover::after{transform:scaleX(1)}
+.fest-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 16px 40px rgba(28,48,34,0.12)}
+.fest-icon{font-size:28px;margin-bottom:16px}
+.fest-name{font-family:'Playfair Display',serif;font-size:17px;color:var(--forest);margin-bottom:10px;line-height:1.3}
+.fest-desc{font-size:13px;color:#5A4A30;line-height:1.7;font-weight:300}
+
+/* CONTACT */
+.contact-section{background:linear-gradient(160deg,var(--forest) 0%,var(--earth) 100%);padding:100px 0}
+.contact-inner{max-width:700px;margin:0 auto;padding:0 48px;text-align:center}
+.contact-title{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,56px);color:var(--white);font-weight:400;line-height:1.15;margin-bottom:16px}
+.contact-title em{font-style:italic;color:var(--sand)}
+.contact-note{font-size:14px;color:var(--mist);line-height:1.85;margin-bottom:48px;font-weight:300}
+.phone-link{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,42px);color:var(--gold);display:block;text-decoration:none;letter-spacing:3px;margin-bottom:12px;transition:color 0.25s}
+.phone-link:hover{color:var(--sand)}
+.phone-methods{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:44px}
+.wa-btn{display:inline-flex;align-items:center;gap:12px;background:var(--gold);color:var(--earth);font-family:'Jost',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:600;padding:18px 40px;text-decoration:none;transition:all 0.3s ease}
+.wa-btn:hover{background:var(--sand);transform:translateY(-3px);box-shadow:0 16px 40px rgba(212,168,67,0.3)}
+.gps-note{margin-top:44px;padding-top:36px;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;color:rgba(255,255,255,0.45);font-style:italic;line-height:1.8}
+
+/* FOOTER */
+footer{background:var(--earth);padding:24px 48px;text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,67,0.3)}
+
+/* DIVIDER */
+.ornament{border:none;border-top:1px solid rgba(28,48,34,0.1);margin:0}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .hero-photos{grid-template-columns:1fr;grid-template-rows:60vh}
+  .hero-photo.sec1,.hero-photo.sec2{display:none}
+  .hero-content{padding:40px 24px}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .container{padding:0 24px}
+  .features-grid{grid-template-columns:1fr}
+  .split{grid-template-columns:1fr}
+  .split-map{min-height:320px}
+  .distances-grid{grid-template-columns:1fr}
+  .fest-grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr;grid-template-rows:auto}
+  .gallery-item.tall{grid-row:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('ro')" id="btn-ro">🇷🇴 Română</button>
+  <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 English</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-photos">
+    <div class="hero-photo main">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80" alt="Vedere panoramică spre Dunăre">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-photo sec1">
+      <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&q=80" alt="Terenul cu vedere spre Dunăre">
+    </div>
+    <div class="hero-photo sec2">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80" alt="Intrarea în teren">
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <!-- RO -->
+    <div class="ro-content show">
+      <div class="hero-tag">De Vânzare · Clisura Dunării · România</div>
+      <h1 class="hero-title">Teren cu Vedere<br><em>Panoramică</em> spre Dunăre</h1>
+      <p class="hero-subtitle">DN57 Gornea · UAT Sichevița · Caraș-Severin</p>
+      <div class="hero-price-box">
+        <span class="hero-price">€ 64.900</span>
+        <span class="hero-price-note">Negociabil pentru cumpărător serios</span>
+      </div>
+      <div class="hero-scroll">Descoperă proprietatea</div>
+    </div>
+    <!-- EN -->
+    <div class="en-content">
+      <div class="hero-tag">For Sale · Danube Gorge · Romania</div>
+      <h1 class="hero-title">Land with <em>Panoramic</em><br>Danube View</h1>
+      <p class="hero-subtitle">DN57 Gornea · Sichevița · Caraș-Severin County</p>
+      <div class="hero-price-box">
+        <span class="hero-price">€ 64,900</span>
+        <span class="hero-price-note">Negotiable for serious buyer</span>
+      </div>
+      <div class="hero-scroll">Discover the property</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-num">2.100</span>
+      <span class="stat-label ro-content show">mp · Intravilan</span>
+      <span class="stat-label en-content">sqm · Building land</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">~100m</span>
+      <span class="stat-label ro-content show">până la Dunăre</span>
+      <span class="stat-label en-content">to the Danube</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">DN57</span>
+      <span class="stat-label ro-content show">acces direct</span>
+      <span class="stat-label en-content">direct road access</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3Ø+💧</span>
+      <span class="stat-label ro-content show">utilități disponibile</span>
+      <span class="stat-label en-content">utilities on site</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROPERTY SECTION -->
+<section class="section festivals reveal">
+  <div class="container">
+    <!-- RO -->
+    <div class="ro-content show">
+      <div class="section-tag">Proprietatea</div>
+      <h2 class="section-title">O oportunitate rară în<br><em>Clisura Dunării</em></h2>
+      <p class="body-text">Teren intravilan de vânzare în Gornea, în inima Clisurii Dunării — unul dintre cele mai spectaculoase tronsoane de fluviu din Europa. Parcela oferă o vedere panoramică largă și neobstrucționată spre Dunăre și munții din Serbia, cu acces direct din DN57. Împrejmuit, cu curent trifazic și apă din fântână proprie.</p>
+    </div>
+    <!-- EN -->
+    <div class="en-content">
+      <div class="section-tag">The Property</div>
+      <h2 class="section-title">A rare plot in the heart of<br><em>the Danube Gorge</em></h2>
+      <p class="body-text">Building land for sale in Gornea, in the heart of the Clisura Dunării — one of the most breathtaking stretches of river in Europe. The plot offers a wide, unobstructed panoramic view over the Danube and the Serbian mountains, with direct access from DN57. Fully fenced, with three-phase electricity and well water on site.</p>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="gallery">
+      <div class="gallery-item tall">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80" alt="Vedere Dunăre">
+        <div class="gallery-caption ro-content show">Vedere panoramică spre Dunăre și munții Serbiei</div>
+        <div class="gallery-caption en-content">Panoramic view over the Danube and Serbian mountains</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&q=80" alt="Terenul">
+        <div class="gallery-caption ro-content show">Terenul verde cu Dunărea în spate</div>
+        <div class="gallery-caption en-content">The plot with Danube backdrop</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80" alt="Intrare teren">
+        <div class="gallery-caption ro-content show">Intrarea în teren · împrejmuire · banner roșu</div>
+        <div class="gallery-caption en-content">Plot entrance · fence · red banner at gate</div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features-grid" style="margin-top:4px">
+      <div class="feature-card">
+        <span class="feat-icon">🌊</span>
+        <div class="feat-name ro-content show">Vedere spre Dunăre</div>
+        <div class="feat-name en-content">Danube View</div>
+        <div class="feat-desc ro-content show">Panoramă neobstrucționată spre fluviu și munții Serbiei — zi și noapte.</div>
+        <div class="feat-desc en-content">Unobstructed panorama over the river and Serbian mountains — day and night.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feat-icon">🛣</span>
+        <div class="feat-name ro-content show">Acces Direct DN57</div>
+        <div class="feat-name en-content">Direct DN57 Access</div>
+        <div class="feat-desc ro-content show">Front stradal direct la drumul național — principala rută turistică a Clisurii.</div>
+        <div class="feat-desc en-content">Direct frontage on the national road — the main tourist route of the gorge.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feat-icon">⚡</span>
+        <div class="feat-name ro-content show">Utilități</div>
+        <div class="feat-name en-content">Utilities</div>
+        <div class="feat-desc ro-content show">Curent electric trifazic + apă din fântână proprie pe teren.</div>
+        <div class="feat-desc en-content">Three-phase electricity + fresh water from existing well on site.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feat-icon">🔒</span>
+        <div class="feat-name ro-content show">Teren Împrejmuit</div>
+        <div class="feat-name en-content">Fully Fenced</div>
+        <div class="feat-desc ro-content show">Complet închis cu poartă. Banner roșu la intrare pentru identificare ușoară.</div>
+        <div class="feat-desc en-content">Fully enclosed with gate. Red banner marks the entrance for easy identification.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feat-icon">📐</span>
+        <div class="feat-name ro-content show">2.100 mp Intravilan</div>
+        <div class="feat-name en-content">2,100 sqm Building Land</div>
+        <div class="feat-desc ro-content show">Suprafață generoasă — loc pentru pensiune, terasă, grădină și parcare.</div>
+        <div class="feat-desc en-content">Generous surface — room for guesthouse, terrace, garden and parking.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feat-icon">🏔</span>
+        <div class="feat-name ro-content show">Zonă Liniștită</div>
+        <div class="feat-name en-content">Peaceful Setting</div>
+        <div class="feat-desc ro-content show">Atmosferă rurală autentică pe un drum principal perfect accesibil.</div>
+        <div class="feat-desc en-content">Authentic rural atmosphere on a well-maintained national road.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="ornament">
+
+<!-- INVESTMENT + MAP -->
+<div class="split reveal">
+  <div class="split-text">
+    <!-- RO -->
+    <div class="ro-content show">
+      <div class="section-tag" style="color:var(--sand)">Potențial de Investiție</div>
+      <h2 class="section-title" style="color:var(--white)">Ideal pentru<br><em>turism de excepție</em></h2>
+      <p class="body-text" style="color:var(--mist)">Clisura Dunării este una dintre destinațiile cu cea mai rapidă creștere din România. Numărul turiștilor — inclusiv internaționali din Cehia, Austria și Germania — crește în fiecare an.</p>
+      <div class="invest-items">
+        <div class="invest-item">Pensiune agroturistică cu terasă cu vedere la Dunăre</div>
+        <div class="invest-item">Cabane de vacanță boutique sau glamping</div>
+        <div class="invest-item">Restaurant cu panoramă spectaculoasă</div>
+        <div class="invest-item">Casă de vacanță privată premium</div>
+        <div class="invest-item">Investiție pe termen lung în turism</div>
+        <div class="invest-item">Eco-lodge sau turism de natură</div>
+      </div>
+    </div>
+    <!-- EN -->
+    <div class="en-content">
+      <div class="section-tag" style="color:var(--sand)">Investment Potential</div>
+      <h2 class="section-title" style="color:var(--white)">Built for<br><em>exceptional hospitality</em></h2>
+      <p class="body-text" style="color:var(--mist)">The Clisura Dunării is one of Romania's fastest-growing tourism destinations. Visitor numbers — including international guests from Czech Republic, Austria and Germany — rise every year.</p>
+      <div class="invest-items">
+        <div class="invest-item">Agrotourism guesthouse with Danube-facing terrace</div>
+        <div class="invest-item">Boutique holiday cabins or glamping experience</div>
+        <div class="invest-item">Restaurant or café with spectacular river view</div>
+        <div class="invest-item">Premium private holiday home</div>
+        <div class="invest-item">Long-term tourism development investment</div>
+        <div class="invest-item">Eco-lodge or nature tourism facility</div>
+      </div>
+    </div>
+  </div>
+  <div class="split-map">
+    <iframe class="map-iframe"
+      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4000!2d21.873!3d44.709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sro!2sro!4v1"
+      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <div class="map-pin-label ro-content show">📍 Zona Gornea · DN57 · Clisura Dunării</div>
+    <div class="map-pin-label en-content">📍 Gornea Area · DN57 · Danube Gorge</div>
+  </div>
+</div>
+
+<!-- DISTANCES -->
+<section class="section section-alt reveal">
+  <div class="container">
+    <!-- RO -->
+    <div class="ro-content show">
+      <div class="section-tag" style="color:var(--sand)">Distanțe</div>
+      <h2 class="section-title" style="color:var(--white)">Tot ce ai nevoie<br><em>la îndemână</em></h2>
+    </div>
+    <!-- EN -->
+    <div class="en-content">
+      <div class="section-tag" style="color:var(--sand)">Distances</div>
+      <h2 class="section-title" style="color:var(--white)">Everything<br><em>within easy reach</em></h2>
+    </div>
+
+    <div class="distances-grid">
+      <div class="dist-card">
+        <div class="dist-place ro-content show">✈️ Aeroportul Timișoara (TM)</div>
+        <div class="dist-place en-content">✈️ Timișoara Airport (TM)</div>
+        <div class="dist-km">~170 km</div>
+        <div class="dist-detail ro-content show">cca. 2h cu mașina · zboruri spre toată Europa</div>
+        <div class="dist-detail en-content">approx. 2h by car · flights across Europe</div>
+      </div>
+      <div class="dist-card">
+        <div class="dist-place ro-content show">✈️ Aeroportul Belgrad (BEG)</div>
+        <div class="dist-place en-content">✈️ Belgrade Airport (BEG)</div>
+        <div class="dist-km">~180 km</div>
+        <div class="dist-detail ro-content show">cca. 2.5h · hub internațional major + feribot</div>
+        <div class="dist-detail en-content">approx. 2.5h · major international hub + ferry</div>
+      </div>
+      <div class="dist-card">
+        <div class="dist-place ro-content show">🏙 Moldova Nouă</div>
+        <div class="dist-place en-content">🏙 Moldova Nouă</div>
+        <div class="dist-km">~20 km</div>
+        <div class="dist-detail ro-content show">benzinării · supermarketuri · farmacii · feribot Serbia</div>
+        <div class="dist-detail en-content">gas stations · supermarkets · pharmacy · Serbia ferry</div>
+      </div>
+      <div class="dist-card">
+        <div class="dist-place ro-content show">🏙 Orșova</div>
+        <div class="dist-place en-content">🏙 Orșova</div>
+        <div class="dist-km">~55 km</div>
+        <div class="dist-detail ro-content show">cel mai apropiat oraș cu servicii complete</div>
+        <div class="dist-detail en-content">nearest town with full services</div>
+      </div>
+      <div class="dist-card">
+        <div class="dist-place ro-content show">🏙 Timișoara</div>
+        <div class="dist-place en-content">🏙 Timișoara</div>
+        <div class="dist-km">~195 km</div>
+        <div class="dist-detail ro-content show">capitala Banatului · aeroport internațional</div>
+        <div class="dist-detail en-content">Banat capital · international airport</div>
+      </div>
+      <div class="dist-card">
+        <div class="dist-place ro-content show">⛪ Mănăstirea Gornea</div>
+        <div class="dist-place en-content">⛪ Gornea Monastery</div>
+        <div class="dist-km">~3 km</div>
+        <div class="dist-detail ro-content show">Izvorul Tămăduirii · obiectiv turistic și spiritual</div>
+        <div class="dist-detail en-content">Izvorul Tămăduirii · spiritual & tourist attraction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FESTIVALS -->
+<section class="section festivals reveal">
+  <div class="container">
+    <!-- RO -->
+    <div class="ro-content show">
+      <div class="section-tag">Cultură și Tradiții</div>
+      <h2 class="section-title">Festivaluri care<br><em>atrag lumea</em></h2>
+      <p class="body-text">Zona păstrează un mozaic viu de patrimoniu ceh, român și bănățean, celebrat prin festivaluri autentice ce atrag turiști din toată Europa în fiecare an.</p>
+    </div>
+    <!-- EN -->
+    <div class="en-content">
+      <div class="section-tag">Culture & Traditions</div>
+      <h2 class="section-title">Festivals that<br><em>draw the world</em></h2>
+      <p class="body-text">The region preserves a living mosaic of Czech, Romanian and Banat heritage, celebrated through authentic festivals that attract visitors from across Europe every year.</p>
+    </div>
+
+    <div class="fest-grid">
+      <div class="fest-card">
+        <div class="fest-icon">🎻</div>
+        <div class="fest-name ro-content show">Festivalul de Folclor Ceh</div>
+        <div class="fest-name en-content">Czech Folklore Festival</div>
+        <div class="fest-desc ro-content show">August · Șumița, Sfânta Elena, Eibenthal. Dansuri și muzică tradițională — atrage anual turiști cehi din toată Europa.</div>
+        <div class="fest-desc en-content">August · Šumița, Sfânta Elena, Eibenthal. Traditional dances & music drawing Czech visitors from across Europe every year.</div>
+      </div>
+      <div class="fest-card">
+        <div class="fest-icon">🪗</div>
+        <div class="fest-name ro-content show">Tradiții Cărășene</div>
+        <div class="fest-name en-content">Caraș Traditions Festival</div>
+        <div class="fest-desc ro-content show">Sărbătoarea patrimoniului bănățean. Costume autentice, meșteșuguri și gastronomie regională specifică zonei.</div>
+        <div class="fest-desc en-content">Banat heritage celebration. Authentic costumes, traditional crafts and regional gastronomy of the area.</div>
+      </div>
+      <div class="fest-card">
+        <div class="fest-icon">🌊</div>
+        <div class="fest-name ro-content show">Festivalul Costumelor Dunărene</div>
+        <div class="fest-name en-content">Danube Costumes Festival</div>
+        <div class="fest-desc ro-content show">Paradă de port tradițional de-a lungul fluviului. Eveniment unic în comunitățile Clisurii Dunării.</div>
+        <div class="fest-desc en-content">Traditional dress parade along the river. A unique event specific to the Danube Gorge communities.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- VISION SECTION -->
+<section class="section festivals reveal" style="background:#FAF6EE">
+  <div class="container">
+    <div class="ro-content show">
+      <div class="section-tag">Viziunea</div>
+      <h2 class="section-title">Ce ai putea construi<br><em>pe acest teren</em></h2>
+      <p class="body-text">2.100 mp cu vedere directă la Dunăre și acces la DN57 — un amplasament rar care se pretează la mai multe tipuri de proiecte turistice sau rezidențiale. Iată câteva inspirații din zona Clisurii și din România:</p>
+    </div>
+    <div class="en-content">
+      <div class="section-tag">The Vision</div>
+      <h2 class="section-title">What could be built<br><em>on this land</em></h2>
+      <p class="body-text">2,100 sqm with a direct Danube view and DN57 access — a rare plot that lends itself to multiple tourism or residential projects. Here are some inspirations from the Clisura area and Romania:</p>
+    </div>
+
+    <div class="vision-grid">
+
+      <div class="vision-card">
+        <div class="vision-img-wrap">
+          <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/304571508.jpg?k=de1e939a5b6e9d9ea5e8c82cbab0af5d3d8e18e1a7e6a9a7e9e8e7e6e5e4e3e2&o=&hp=1"
+               onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80'"
+               alt="Pensiune Clisura Dunarii">
+        </div>
+        <div class="vision-body">
+          <div class="vision-type ro-content show">🏡 Pensiune Agroturistică</div>
+          <div class="vision-type en-content">🏡 Agrotourism Guesthouse</div>
+          <div class="vision-desc ro-content show">Pensiune cu 6–10 camere, terasă cu vedere la Dunăre, grădină și loc de grătar — modelul cel mai profitabil în zonă, cu ocupare ridicată în sezon.</div>
+          <div class="vision-desc en-content">6–10 room guesthouse with Danube terrace, garden and barbecue area — the most profitable model in the area, with high occupancy in season.</div>
+        </div>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-img-wrap">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80"
+               alt="Cabane de lemn">
+        </div>
+        <div class="vision-body">
+          <div class="vision-type ro-content show">🪵 Cabane de Lemn / Glamping</div>
+          <div class="vision-type en-content">🪵 Wooden Cabins / Glamping</div>
+          <div class="vision-desc ro-content show">2–4 cabane individuale din lemn cu terase private și vedere la Dunăre — produsul turistic cu cea mai mare cerere în România în prezent.</div>
+          <div class="vision-desc en-content">2–4 individual wooden cabins with private terraces and Danube view — the tourism product with the highest demand in Romania right now.</div>
+        </div>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-img-wrap">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80"
+               alt="Restaurant cu vedere">
+        </div>
+        <div class="vision-body">
+          <div class="vision-type ro-content show">🍽 Restaurant Panoramic</div>
+          <div class="vision-type en-content">🍽 Panoramic Restaurant</div>
+          <div class="vision-desc ro-content show">Restaurant cu terasă deschisă spre Dunăre, pe DN57 — vizibil din drum, accesibil tuturor turiștilor care traversează Clisura.</div>
+          <div class="vision-desc en-content">Restaurant with open terrace facing the Danube, on DN57 — visible from the road, accessible to all tourists crossing the gorge.</div>
+        </div>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-img-wrap">
+          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80"
+               alt="Casa de vacanta premium">
+        </div>
+        <div class="vision-body">
+          <div class="vision-type ro-content show">🏠 Casă de Vacanță Privată</div>
+          <div class="vision-type en-content">🏠 Private Holiday Home</div>
+          <div class="vision-desc ro-content show">Vilă sau casă privată de vacanță cu vedere la Dunăre — investiție personală cu potențial de închiriere pe Airbnb/Booking.</div>
+          <div class="vision-desc en-content">Private villa or holiday home with Danube view — personal investment with rental potential on Airbnb/Booking.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vision-disclaimer ro-content show">
+      * Imaginile sunt orientative — prezintă stiluri și concepte similare cu ce se poate construi pe acest teren.
+    </div>
+    <div class="vision-disclaimer en-content">
+      * Images are illustrative — they show styles and concepts similar to what can be built on this land.
+    </div>
+  </div>
+</section>
+
+<style>
+.vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+.vision-card{background:#fff;border:1px solid rgba(28,48,34,0.1);overflow:hidden;transition:transform 0.3s ease,box-shadow 0.3s ease}
+.vision-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(28,48,34,0.15)}
+.vision-img-wrap{height:220px;overflow:hidden}
+.vision-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
+.vision-card:hover .vision-img-wrap img{transform:scale(1.07)}
+.vision-body{padding:24px}
+.vision-type{font-family:'Playfair Display',serif;font-size:18px;color:#1C3022;margin-bottom:10px;font-weight:600}
+.vision-desc{font-size:13px;color:#5A4A30;line-height:1.75;font-weight:300}
+.vision-disclaimer{margin-top:28px;font-size:11px;color:#9A8A70;font-style:italic;text-align:center;letter-spacing:0.5px}
+@media(max-width:768px){.vision-grid{grid-template-columns:1fr}}
+</style>
+
+<!-- CONTACT -->
+<section class="contact-section reveal">
+  <div class="contact-inner">
+    <!-- RO -->
+    <div class="ro-content show">
+      <h2 class="contact-title">Ești interesat?<br><em>Hai să vorbim.</em></h2>
+      <p class="contact-note">
+        Proprietarul locuiește în Constanța. Terenul poate fi vizitat independent — accesibil direct din DN57, împrejmuit, cu banner roșu la poartă.<br><br>
+        <strong style="color:var(--sand)">Coordonatele GPS exacte</strong> se transmit prin WhatsApp după primul contact.
+      </p>
+    </div>
+    <!-- EN -->
+    <div class="en-content">
+      <h2 class="contact-title">Interested?<br><em>Let's talk.</em></h2>
+      <p class="contact-note">
+        The owner is based in Constanța. The plot can be visited independently — accessible directly from DN57, fully fenced, with a red banner at the gate.<br><br>
+        <strong style="color:var(--sand)">Exact GPS coordinates</strong> will be shared via WhatsApp after first contact.
+      </p>
+    </div>
+
+    <a href="tel:0724697198" class="phone-link">0724 697 198</a>
+    <div class="phone-methods ro-content show">Apel telefonic sau WhatsApp</div>
+    <div class="phone-methods en-content">Phone call or WhatsApp</div>
+
+    <a href="https://wa.me/40724697198" class="wa-btn">
+      <span>💬</span>
+      <span class="ro-content show">Trimite mesaj WhatsApp</span>
+      <span class="en-content">Message on WhatsApp</span>
+    </a>
+
+    <p class="gps-note ro-content show">Fotografii suplimentare și video cu festivalurile locale disponibile la cerere.</p>
+    <p class="gps-note en-content">Additional photos and video footage of local festivals available upon request.</p>
+  </div>
+</section>
+
+<footer>
+  <span class="ro-content show">Teren de Vânzare · Gornea, Clisura Dunării · Caraș-Severin, România · 2.100 mp · €64.900</span>
+  <span class="en-content">Land for Sale · Gornea, Clisura Dunării · Caraș-Severin, Romania · 2,100 sqm · €64,900</span>
+</footer>
+
+<script>
+function setLang(lang) {
+  // Toggle button states
+  document.getElementById('btn-ro').classList.toggle('active', lang === 'ro');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  
+  // Show/hide content
+  document.querySelectorAll('.ro-content').forEach(el => {
+    el.classList.toggle('show', lang === 'ro');
+  });
+  document.querySelectorAll('.en-content').forEach(el => {
+    el.classList.toggle('show', lang === 'en');
+  });
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
